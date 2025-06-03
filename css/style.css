@@ -1,0 +1,1215 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --primary-color: #2c3e50; /* Industrial Grey/Dark Blue */
+    --secondary-color: #3498db; /* Metallic Blue */
+    --accent-color: #e67e22; /* Vibrant Orange */
+    --accent-color-alt: #c0392b; /* Vibrant Red Highlight */
+    --light-grey: #f4f6f8;
+    --dark-grey: #333;
+    --text-color: #555;
+    --heading-color: var(--primary-color);
+    --white-color: #fff;
+    --border-color: #ddd;
+
+    --font-primary: 'Roboto', 'Arial', sans-serif; /* Example: Choose a clean, modern font */
+    --font-secondary: 'Montserrat', sans-serif; /* Example for headings */
+
+    --base-font-size: 16px;
+    --header-height: 80px;
+    --container-width: 1140px;
+    --border-radius: 5px;
+    --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --transition-speed: 0.3s ease;
+}
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--base-font-size);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-secondary);
+    color: var(--heading-color);
+    margin-bottom: 0.8em;
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.8em; }
+h2 { font-size: 2.2em; }
+h3 { font-size: 1.8em; }
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px; /* For nested lists in product details */
+}
+ul li {
+    margin-bottom: 0.5em;
+}
+
+
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+.bg-light {
+    background-color: var(--light-grey);
+}
+.bg-dark {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+.bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark p {
+    color: var(--white-color);
+}
+.bg-dark a:not(.cta-button) {
+    color: var(--accent-color);
+}
+.bg-dark a:not(.cta-button):hover {
+    color: var(--white-color);
+}
+
+
+.text-center {
+    text-align: center;
+}
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    position: relative;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0;
+}
+
+/* --- Header & Navigation --- */
+header {
+    background-color: var(--white-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 100px;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.logo {
+    height: 100px; /* Adjust as needed */
+    margin-right: 10px;
+}
+.logo-text {
+    font-family: var(--font-secondary);
+}
+
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 25px;
+}
+
+.nav-links a {
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: 10px 0;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width var(--transition-speed);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+.nav-links a.active {
+    color: var(--accent-color);
+}
+
+
+.menu-toggle {
+    display: none; /* Hidden on desktop */
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+/* --- Call to Action (CTA) Buttons --- */
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--white-color) !important; /* important to override link color */
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    border: 2px solid transparent;
+}
+.cta-button:hover {
+    background-color: var(--accent-color-alt);
+    transform: translateY(-2px);
+    color: var(--white-color) !important;
+}
+.cta-button.alt {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color) !important;
+}
+.cta-button.alt:hover {
+    background-color: var(--accent-color);
+    color: var(--white-color) !important;
+}
+.cta-button.nav-cta {
+    padding: 10px 20px;
+    font-size: 0.9em;
+}
+.cta-button.small-btn {
+    padding: 8px 15px;
+    font-size: 0.8em;
+}
+
+
+/* --- Hero Section --- */
+.hero {
+    position: relative;
+    height: calc(100vh - var(--header-height)); /* Full viewport height minus header */
+    min-height: 500px;
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+.hero-slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+.slide::before { /* Dark overlay for text readability */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.hero-content {
+    position: relative; /* To be above overlay */
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+}
+.hero h1 {
+    font-size: 3.5em;
+    margin-bottom: 0.5em;
+    color: var(--white-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.hero p {
+    font-size: 1.4em;
+    margin-bottom: 1.5em;
+    color: var(--light-grey);
+}
+.slider-controls {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+.slider-controls button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid var(--white-color);
+    color: var(--white-color);
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed);
+}
+.slider-controls button:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+/* --- Intro Section (Home) --- */
+.intro h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.intro p {
+    font-size: 1.1em;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Product Categories (Home) --- */
+
+/* MOVE THESE STYLES TO CSS/STYLE.CSS */
+        .product-intro-text { text-align: center; margin-bottom: 30px; font-size: 1.1em; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .product-intro-text h2 { margin-bottom: 15px; font-size: 1.8em; color: var(--primary-color); }
+        .category-title-on-page { font-size: 2em; color: var(--primary-color); margin-top: 40px; margin-bottom: 25px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+        .product-grid-for-category { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
+        .modal-detail-section h4 { margin-top: 15px; margin-bottom: 5px; color: var(--primary-color); font-size: 1.1em; }
+        .modal-detail-section ul { list-style: disc; padding-left: 25px; margin-bottom: 10px; }
+        .modal-detail-section ul li { margin-bottom: 0.3em; }
+
+        /* Category Tabs Styling (Products Page) - from previous step */
+        .category-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .category-tabs .tab-button { padding: 10px 18px; border: 1px solid var(--border-color); background-color: var(--light-grey); color: var(--text-color); cursor: pointer; border-radius: var(--border-radius); font-size: 0.95em; transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed); font-weight: 500; text-align: center; }
+        .category-tabs .tab-button:hover { background-color: var(--secondary-color); color: var(--white-color); border-color: var(--secondary-color); }
+        .category-tabs .tab-button.active-tab { background-color: var(--accent-color); color: var(--white-color); border-color: var(--accent-color-alt); font-weight: bold; }
+        /* END OF STYLES TO MOVE */
+		
+		/* --- Category Tabs Styling (Products Page) --- */
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+    gap: 10px;       /* Space between tabs */
+    margin-bottom: 25px; /* Space below the tabs container */
+    /* Optional: border-bottom: 1px solid var(--border-color); */
+    /* Optional: padding-bottom: 10px; */
+}
+
+.category-tabs .tab-button { /* Styling for each tab */
+    padding: 10px 18px;
+    border: 1px solid var(--border-color);
+    background-color: var(--light-grey);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-size: 0.95em;
+    transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+    font-weight: 500;
+    text-align: center;
+}
+
+.category-tabs .tab-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border-color: var(--secondary-color);
+}
+
+.category-tabs .tab-button.active-tab {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    border-color: var(--accent-color-alt); /* Or var(--accent-color) */
+    font-weight: bold;
+}
+
+        /* Basic styles for new elements, add to your style.css or keep here for now */
+        .product-intro-text {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .product-intro-text h2 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            color: var(--primary-color);
+        }
+        .category-title-on-page {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        .product-grid-for-category {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Uses existing product-card styles */
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .modal-detail-section h4 {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+        .modal-detail-section ul {
+            list-style: disc;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        .modal-detail-section ul li {
+            margin-bottom: 0.3em;
+        }
+		
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.category-card {
+    background-color: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    text-align: center;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.category-card h3 {
+    padding: 20px 20px 10px;
+    color: var(--primary-color);
+    font-size: 1.5em;
+}
+.category-card p {
+    padding: 0 20px 15px;
+    font-size: 0.95em;
+    min-height: 60px; /* Ensure consistent card height */
+}
+.learn-more {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+    font-weight: bold;
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+}
+.learn-more:hover {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}
+
+
+/* --- Capabilities Section (Home) --- */
+.capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.capability-item {
+    padding: 20px;
+}
+.capability-item [icon] { /* Placeholder for icon styling */
+    font-size: 3em;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    display: block; /* If using <i> or <span> for icons */
+}
+.capability-item h3 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+/* --- Testimonials Section (Home) --- */
+.testimonial-slider-container {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--light-grey);
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+.testimonial {
+    display: none;
+    text-align: center;
+}
+.testimonial.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+.testimonial p {
+    font-size: 1.1em;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+.testimonial h4 {
+    font-size: 1em;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+.testimonial-controls {
+    text-align: center;
+    margin-top: 20px;
+}
+.testimonial-controls button {
+    background: var(--secondary-color);
+    border: none;
+    color: var(--white-color);
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed);
+}
+.testimonial-controls button:hover {
+    background: var(--primary-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Page Header (for About, Products, etc.) --- */
+.page-header {
+    padding: 80px 0;
+    background-size: cover;
+    background-position: center;
+    color: var(--white-color);
+    text-align: center;
+    position: relative;
+}
+.page-header::before { /* Dark overlay for text readability */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+.page-header .container {
+    position: relative; /* To be above overlay */
+    z-index: 1;
+}
+.page-header h1 {
+    font-size: 3em;
+    color: var(--white-color);
+}
+
+/* --- About Us Page --- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 50px;
+    align-items: flex-start;
+}
+.about-text h2 {
+    margin-top: 20px; /* Spacing for multiple h2s */
+}
+.about-text h2:first-child {
+    margin-top: 0;
+}
+.about-text ul {
+    list-style: disc; /* Use disc for bullet points */
+    padding-left: 20px;
+}
+.about-text ul li {
+    margin-bottom: 0.8em;
+}
+.about-image img {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+
+/* --- Products Page --- */
+.product-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.filters label, .search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+.filters select, .search-bar input[type="text"] {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    min-width: 200px;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+.search-bar input[type="text"] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.search-bar button {
+    padding: 10px 15px;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border: 1px solid var(--secondary-color);
+    border-left: none;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+.search-bar button:hover {
+    background-color: var(--primary-color);
+}
+
+#product-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.product-card {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow var(--transition-speed);
+}
+.product-card:hover {
+    box-shadow: var(--box-shadow);
+}
+.product-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+.product-card-content {
+    padding: 20px;
+    flex-grow: 1; /* Allows content to fill space */
+    display: flex;
+    flex-direction: column;
+}
+.product-card-content h3 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+.product-card-content .product-category-tag {
+    display: inline-block;
+    background-color: var(--light-grey);
+    color: var(--secondary-color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-size: 0.8em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.product-card-content p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Pushes button to bottom */
+}
+.product-card-content .cta-button {
+    align-self: flex-start; /* Aligns button to the left */
+    margin-top: auto; /* Pushes button to bottom if content is short */
+}
+.loading-message, .no-results-message {
+    grid-column: 1 / -1; /* Span all columns */
+    text-align: center;
+    font-size: 1.2em;
+    padding: 40px;
+    color: var(--text-color);
+}
+
+/* Product Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeInModal 0.3s ease;
+}
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.modal-content {
+    background-color: var(--white-color);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 80%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    animation: slideInModal 0.3s ease-out;
+}
+@keyframes slideInModal {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.close-button {
+    color: var(--dark-grey);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color var(--transition-speed);
+}
+.close-button:hover,
+.close-button:focus {
+    color: var(--accent-color-alt);
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-product-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain; /* Use contain to see full image */
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+.modal-product-details h3, .modal-product-details h4 {
+    color: var(--primary-color);
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+.modal-product-details ul {
+    list-style: disc;
+    padding-left: 25px;
+    margin-bottom: 15px;
+}
+.modal-product-details ul li {
+    margin-bottom: 0.5em;
+    font-size: 0.95em;
+}
+.modal-product-details p {
+    font-size: 0.95em;
+    margin-bottom: 0.8em;
+}
+.modal-ctas {
+    margin-top: 25px;
+    text-align: right;
+}
+.modal-ctas .cta-button {
+    margin-left: 10px;
+}
+
+/* --- Industries Served Page --- */
+.lead-text {
+    font-size: 1.15em;
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 40px;
+}
+.industry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.industry-card {
+    background-color: var(--light-grey);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.industry-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow);
+}
+.industry-card [icon] { /* Placeholder for icon styling */
+    font-size: 2.5em;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+.industry-card h3 {
+    color: var(--primary-color);
+    font-size: 1.5em;
+}
+
+
+/* --- Contact Us Page --- */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Changed: Both columns now take 1 fraction (equal width) */
+    /* You can also use: grid-template-columns: repeat(2, 1fr); */
+    gap: 40px;
+}
+.contact-details h2, .contact-form-container h2 {
+    margin-bottom: 35px;
+}
+.contact-details ul {
+    list-style: none;
+    padding-left: 0;
+}
+.contact-details ul li {
+    display: flex; /* Use flexbox for better alignment */
+    align-items: flex-start; /* Aligns icon with the start of the text block */
+    margin-bottom: 18px; /* Increase space between list items */
+    font-size: 1.05em; /* Slightly larger font for readability */
+    line-height: 1.7;  /* Improves readability of multi-line text */
+}
+.contact-details ul li i { /* Styling for the Font Awesome icons */
+    font-size: 1.2em;     /* Make icons a bit larger */
+    margin-right: 15px;   /* Space between icon and text */
+    margin-top: 4px;      /* Slight adjustment to vertically align with text */
+    width: 22px;          /* Give icons a fixed width for consistent alignment */
+    text-align: center;   /* Center icon if its width is more than the icon itself */
+}
+.contact-details ul li strong {
+    font-weight: 600; /* Ensure labels are nicely bold */
+    margin-right: 6px; /* Small space after the bold label (e.g., "Address:") */
+    color: var(--primary-color); /* Use your theme's primary color for labels */
+}
+
+/* Optional: If you want the text part (after strong) to wrap more cleanly */
+.contact-details ul li div.detail-text {
+    flex: 1; /* Allows this part to take remaining space and wrap */
+}
+.contact-details ul li a {
+    color: var(--secondary-color);
+}
+.contact-details ul li a:hover {
+    text-decoration: underline;
+}
+
+.contact-form .form-group, .quote-form .form-group {
+    margin-bottom: 20px;
+}
+.contact-form label, .quote-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea,
+.quote-form input[type="text"],
+.quote-form input[type="email"],
+.quote-form input[type="tel"],
+.quote-form textarea,
+.quote-form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    font-family: var(--font-primary);
+    transition: border-color var(--transition-speed);
+}
+.contact-form input:focus,
+.contact-form textarea:focus,
+.quote-form input:focus,
+.quote-form textarea:focus,
+.quote-form select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+.error-message {
+    display: block;
+    color: var(--accent-color-alt);
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+.form-status-message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+.form-status-message.success {
+    color: green;
+}
+.form-status-message.error {
+    color: var(--accent-color-alt);
+}
+
+.map-section {
+    padding: 60px 0;
+    background-color: var(--light-grey);
+}
+.map-section iframe {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* --- Request a Quote Page --- */
+.quote-form .form-row {
+    display: flex;
+    gap: 20px;
+}
+.quote-form .form-row .form-group {
+    flex: 1;
+}
+#additionalProductsContainer .form-row {
+    margin-bottom: 15px;
+    align-items: flex-end; /* Align remove button nicely */
+}
+#additionalProductsContainer .form-row .form-group {
+    margin-bottom: 0; /* Reset margin for items in row */
+}
+.remove-product-btn {
+    padding: 20px;
+    background-color: var(--accent-color-alt);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-left: 0px;
+    height: 44px; /* Align with input height */
+	display: flex;
+    align-items: center;    /* Vertically centers the icon */
+    justify-content: center; /* Horizontally centers the icon */
+
+    /* Optional: if the icon is an <i> tag, ensure its line-height doesn't interfere */
+    line-height: 1; /* Can sometimes help with precise centering of icons */
+}
+/* --- Styles for Request a Quote - Product Selection Group --- */
+.product-selection-wrapper {
+    display: flex;
+    align-items: flex-end; /* Aligns items along their baseline/bottom */
+    gap: 20px;             /* Creates space between the select area and the button */
+    /* The form-group class already provides margin-bottom: 20px; */
+}
+
+.product-selection-wrapper .main-product-selector {
+    flex-grow: 1; /* Allows the select dropdown area to take up available horizontal space */
+}
+
+/* Ensure the select element within this specific structure still behaves as expected */
+.product-selection-wrapper .main-product-selector select {
+    width: 100%;      /* Makes the select dropdown fill its container */
+    /* If the general .form-group select has margin-bottom, 
+       and error-message is not block, you might remove it here
+       or ensure it's consistent. For now, we assume general select styles are fine. */
+}
+
+
+.product-selection-wrapper #addProductBtn {
+    white-space: nowrap; /* Prevents the button text from wrapping */
+    margin-bottom: 5px;    /* Ensure no extra bottom margin if flex-end is used */
+
+    /* --- Style adjustments to match select field height --- */
+    padding-top: 11px;    /* Adjust this value as needed */
+    padding-bottom: 11px; /* Adjust this value as needed */
+    font-size: 1em;       /* Match the font size of the select element */
+    line-height: 1.31;    /* Adjust to match input/select line-height or to center text vertically */
+                           /* This value often helps with vertical centering in buttons */
+
+    /* Inherits horizontal padding from .small-btn or .cta-button */
+    /* Inherits border from .cta-button.alt */
+    /* Ensure box-sizing: border-box; is globally applied (it should be from your initial CSS) */
+}
+
+/* Adjustments for dynamically added product rows if their layout needs tweaking */
+#additionalProductsContainer .form-row {
+    /* Existing styles should apply, but you can add specific overrides here if needed */
+    /* For example, if you want the remove button to align differently: */
+    /* align-items: center; */
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-grey);
+    padding: 50px 0 20px;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.footer-col h4 {
+    color: var(--white-color);
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    position: relative;
+}
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: var(--accent-color);
+}
+.footer-col p {
+    font-size: 0.95em;
+    line-height: 1.7;
+}
+.footer-col ul {
+    list-style: none;
+    padding-left: 0;
+}
+.footer-col ul li a {
+    color: var(--light-grey);
+    transition: color var(--transition-speed), padding-left var(--transition-speed);
+}
+.footer-col ul li a:hover {
+    color: var(--accent-color);
+    padding-left: 5px;
+}
+.footer-col [icon] { /* Placeholder */
+    margin-right: 8px;
+}
+.copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #4a6075; /* Slightly lighter than primary for division */
+    font-size: 0.9em;
+}
+.copyright p {
+    margin-bottom: 0.3em;
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .container {
+        width: 95%;
+    }
+    h1 { font-size: 2.5em; }
+    .hero h1 { font-size: 3em; }
+    .hero p { font-size: 1.2em; }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    .about-image {
+        margin-top: 30px;
+        text-align: center; /* Center images if they become smaller */
+    }
+    .about-image img {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-form-container {
+        margin-top: 30px;
+    }
+    .quote-form .form-row {
+        flex-direction: column;
+        gap: 0; /* Reset gap, rely on form-group margin */
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --base-font-size: 15px;
+    }
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.9em; }
+    .hero h1 { font-size: 2.5em; }
+    .section-padding { padding: 40px 0; }
+
+    .nav-links {
+        display: none; /* Hide for mobile */
+        flex-direction: column;
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background-color: var(--white-color);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        padding-bottom: 10px;
+    }
+    .nav-links.active {
+        display: flex; /* Show when toggled */
+    }
+    .nav-links li {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .nav-links a {
+        display: block;
+        padding: 15px;
+        border-bottom: 1px solid var(--light-grey);
+    }
+    .nav-links a::after { display: none; } /* Remove underline effect for mobile */
+    .nav-links a:hover, .nav-links a.active {
+        background-color: var(--light-grey);
+        color: var(--accent-color);
+    }
+
+    .menu-toggle {
+        display: block; /* Show on mobile */
+    }
+    .nav-cta {
+        display: none; /* Optionally hide nav CTA or move it into mobile menu */
+    }
+
+    .product-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters select, .search-bar input[type="text"], .search-bar button {
+        width: 100%;
+        min-width: auto;
+    }
+    .search-bar input[type="text"] {
+        border-radius: var(--border-radius) var(--border-radius) 0 0; /* Adjust for stacked layout */
+    }
+    .search-bar button {
+         border-radius: 0 0 var(--border-radius) var(--border-radius);
+    }
+
+    #product-list-container, .category-grid, .capabilities-grid, .industry-grid {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-col h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --base-font-size: 14px;
+    }
+    .hero { min-height: 400px; }
+    .hero h1 { font-size: 2em; }
+    .hero p { font-size: 1em; }
+    .hero .cta-button { padding: 10px 18px; font-size: 0.9em; }
+    .section-title { font-size: 2em; }
+
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    .modal-ctas {
+        text-align: center;
+    }
+    .modal-ctas .cta-button {
+        display: block;
+        margin: 10px 0 0;
+    }
+    .modal-ctas .cta-button:first-child {
+        margin-top: 0;
+    }
+}
+
+/* Accessibility: Focus Visible */
+:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+/* Skip to content link (optional but good for accessibility) */
+.skip-link {
+    position: absolute;
+    top: -40px; /* Hidden off-screen */
+    left: 0;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px;
+    z-index: 10000; /* Above everything */
+    transition: top 0.3s;
+}
+.skip-link:focus {
+    top: 0; /* Bring into view on focus */
+}
