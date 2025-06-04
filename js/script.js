@@ -29,7 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             // Optional: Change menu icon (e.g., hamburger to X)
-            // menuToggle.textContent = navLinks.classList.contains('active') ? '[icon: Close]' : '[icon: Menu]';
+            // if (navLinks.classList.contains('active')) {
+            //     menuToggle.innerHTML = '<i class="fas fa-times"></i>'; // Close icon
+            // } else {
+            //     menuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Menu icon
+            // }
         });
     }
 
@@ -49,36 +53,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function nextSlide() {
+    function nextSlideFn() { // Renamed to avoid conflict if nextSlide is a global var elsewhere
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }
 
-    function prevSlide() {
+    function prevSlideFn() { // Renamed
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
+    }
+    
+    function resetSlideInterval() {
+        if (slides.length > 1) { // Only reset if there's more than one slide
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlideFn, 7000);
+        }
     }
 
     if (slides.length > 0) {
         showSlide(currentSlide); // Show initial slide
         if (prevSlideBtn && nextSlideBtn) {
             prevSlideBtn.addEventListener('click', () => {
-                prevSlide();
+                prevSlideFn();
                 resetSlideInterval();
             });
             nextSlideBtn.addEventListener('click', () => {
-                nextSlide();
+                nextSlideFn();
                 resetSlideInterval();
             });
         }
-        // Auto-play
-        slideInterval = setInterval(nextSlide, 7000); // Change slide every 7 seconds
+        if (slides.length > 1) {
+             slideInterval = setInterval(nextSlideFn, 7000); // Auto-play if more than one slide
+        }
     }
-    function resetSlideInterval() {
-        clearInterval(slideInterval);
-        slideInterval = setInterval(nextSlide, 7000);
-    }
-
 
     // --- Home Page Testimonial Slider ---
     const testimonials = document.querySelectorAll('.testimonial-slider-container .testimonial');
@@ -96,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (testimonials.length > 0) {
-        showTestimonial(currentTestimonial); // Show initial testimonial
+        showTestimonial(currentTestimonial);
         if (prevTestimonialBtn && nextTestimonialBtn) {
             prevTestimonialBtn.addEventListener('click', () => {
                 currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
@@ -109,55 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Contact Form Validation & Simulated Submission ---
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (validateForm(this)) {
-                // Simulate submission
-                const formStatus = document.getElementById('formStatus');
-                formStatus.textContent = 'Sending message...';
-                formStatus.className = 'form-status-message'; // Reset classes
-
-                setTimeout(() => {
-                    formStatus.textContent = 'Message sent successfully! We will get back to you soon.';
-                    formStatus.classList.add('success');
-                    this.reset(); // Clear the form
-                    clearErrorMessages(this);
-                }, 1500); // Simulate network delay
-            }
-        });
-    }
-
-    // --- Request a Quote Form Validation & Simulated Submission ---
-    const quoteForm = document.getElementById('quoteForm');
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (validateForm(this)) {
-                const formStatus = document.getElementById('quoteFormStatus');
-                formStatus.textContent = 'Submitting request...';
-                formStatus.className = 'form-status-message'; // Reset classes
-
-                setTimeout(() => {
-                    formStatus.textContent = 'Quote request submitted successfully! Our team will contact you shortly.';
-                    formStatus.classList.add('success');
-                    this.reset();
-                    clearErrorMessages(this);
-                    // Reset dynamically added product fields if any
-                    const additionalProductsContainer = document.getElementById('additionalProductsContainer');
-                    if (additionalProductsContainer) additionalProductsContainer.innerHTML = '';
-                }, 1500);
-            }
-        });
-    }
-
-    // Shared Form Validation Logic
+    // --- Shared Form Validation Helper Functions ---
     function validateForm(form) {
         let isValid = true;
         clearErrorMessages(form);
-
         const requiredFields = form.querySelectorAll('[required]');
         requiredFields.forEach(field => {
             let errorMessage = '';
@@ -179,23 +141,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function isValidEmail(email) {
-        // Basic email validation regex
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     function showError(field, message) {
-        const errorElement = field.closest('.form-group').querySelector('.error-message');
-        if (errorElement) {
-            errorElement.textContent = message;
+        const errorContainer = field.closest('.form-group');
+        if (errorContainer) {
+            const errorElement = errorContainer.querySelector('.error-message');
+            if (errorElement) {
+                errorElement.textContent = message;
+            }
         }
-        field.classList.add('input-error'); // Optional: add class for styling invalid input
+        // field.classList.add('input-error'); // Optional: add class for styling invalid input
     }
 
     function clearErrorMessages(form) {
         form.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-        form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+        // form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error')); // Optional
     }
 
+    // --- Contact Form Validation & Simulated Submission ---
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default browser submission
+            const formStatus = document.getElementById('formStatus');
+            
+            if (validateForm(this)) {
+                // Simulate submission for contact form
+                formStatus.textContent = 'Sending message...';
+                formStatus.className = 'form-status-message'; // Reset classes
+
+                setTimeout(() => {
+                    formStatus.textContent = 'Message sent successfully! We will get back to you soon.';
+                    formStatus.classList.add('success');
+                    this.reset(); // Clear the form
+                    clearErrorMessages(this);
+                }, 1500); // Simulate network delay
+            }
+        });
+    }
+
+    // --- Request a Quote Form Validation & AJAX Submission to Formspree ---
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+        quoteForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default browser submission
+            const form = event.target;
+            const formStatus = document.getElementById('quoteFormStatus');
+            
+            if (validateForm(form)) {
+                const formData = new FormData(form);
+                formStatus.textContent = 'Submitting request...';
+                formStatus.className = 'form-status-message'; // Reset classes
+
+                fetch(form.action, { // form.action should be your Formspree endpoint URL
+                    method: form.method, // form.method should be "POST"
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Important for Formspree AJAX
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        formStatus.textContent = 'Quote request submitted successfully! Our team will contact you shortly.';
+                        formStatus.classList.add('success');
+                        form.reset();
+                        clearErrorMessages(form);
+                        const additionalProductsContainer = document.getElementById('additionalProductsContainer');
+                        if (additionalProductsContainer) additionalProductsContainer.innerHTML = ''; // Reset dynamically added products
+                    } else {
+                        response.json().then(data => {
+                            if (data.errors && data.errors.length > 0) {
+                                const errorMessages = data.errors.map(error => error.message).join(", ");
+                                formStatus.textContent = `Oops! There was a problem: ${errorMessages}`;
+                            } else {
+                                formStatus.textContent = 'Oops! There was a problem submitting your request. Please try again.';
+                            }
+                            formStatus.classList.add('error');
+                        }).catch(() => {
+                            // Fallback if response.json() fails or if no JSON error details from Formspree
+                            formStatus.textContent = 'Oops! There was a problem submitting your request. Please try again later.';
+                            formStatus.classList.add('error');
+                        });
+                    }
+                }).catch(error => {
+                    console.error('Error submitting quote form to Formspree:', error);
+                    formStatus.textContent = 'Oops! There was a problem submitting your request. Please check your connection and try again.';
+                    formStatus.classList.add('error');
+                });
+            }
+        });
+    }
 
     // --- "Request a Quote" Page - Add/Remove Product Functionality ---
     const addProductBtn = document.getElementById('addProductBtn');
@@ -209,22 +245,32 @@ document.addEventListener('DOMContentLoaded', () => {
             productRowCount++;
             const newProductRow = document.createElement('div');
             newProductRow.classList.add('form-row', 'additional-product-item');
+            // Ensure productSelectionDropdown.innerHTML contains valid options
+            // It should be populated by js/products.js -> populateQuoteProductDropdown
+            if (!productSelectionDropdown.innerHTML.includes('<option')) {
+                console.warn("Product selection dropdown for quote form appears empty. Products might not have loaded.");
+                // Optionally provide a default empty select or a message
+            }
+            
             newProductRow.innerHTML = `
-                <div class="form-group">
-                    <label for="productSelection${productRowCount}">Select Product:</label>
+                <div class="form-group" style="flex-grow: 1;">
+                    <label for="productSelection${productRowCount}" class="sr-only">Select Product ${productRowCount + 1}:</label>
                     <select id="productSelection${productRowCount}" name="productSelection${productRowCount}">
                         ${productSelectionDropdown.innerHTML}
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="quantity${productRowCount}">Quantity / Notes:</label>
-                    <input type="text" id="quantity${productRowCount}" name="quantity${productRowCount}" placeholder="e.g., 500 pcs, specific grade">
+                <div class="form-group" style="flex-grow: 1;">
+                    <label for="quantity${productRowCount}" class="sr-only">Quantity / Notes for Product ${productRowCount + 1}:</label>
+                    <input type="text" id="quantity${productRowCount}" name="quantity${productRowCount}" placeholder="Quantity / Notes">
                 </div>
                 <button type="button" class="remove-product-btn"><i class="fas fa-trash-alt"></i></button>
             `;
+            // Add sr-only class for labels in dynamically added rows if you want to hide them visually but keep for accessibility
+            // You would need to define .sr-only in your CSS:
+            // .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
             additionalProductsContainer.appendChild(newProductRow);
 
-            // Add event listener to the new remove button
             newProductRow.querySelector('.remove-product-btn').addEventListener('click', function() {
                 this.closest('.additional-product-item').remove();
             });
