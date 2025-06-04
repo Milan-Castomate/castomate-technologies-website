@@ -61,25 +61,25 @@
                     </div>
 
                     <div class="form-group product-selection-wrapper">
-                        <div class="main-product-selector">
+                        <div class="main-product-selector form-sub-group">
                             <label for="productSelection">Select Product(s):</label>
                             <select id="productSelection" name="productSelection" required>
                                 <option value="">-- Select a Product --</option>
                                 </select>
-                            <span class="error-message"></span> </div>
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="quantity-requirements-group form-sub-group"> <label for="quantity">Quantity / Requirements:</label>
+                            <textarea id="quantity" name="quantity" rows="1" placeholder="e.g., 1000 pcs, specific notes" required></textarea> 
+                            <span class="error-message"></span>
+                        </div>
+
                         <button type="button" id="addProductBtn" class="cta-button alt small-btn">Add Another Product</button>
                     </div>
 
                     <div id="additionalProductsContainer">
                         </div>
-
-
-                    <div class="form-group">
-                        <label for="quantity">Quantity / Requirements</label>
-                        <textarea id="quantity" name="quantity" rows="3" placeholder="e.g., Exothermic Sleeves - Open, 1000 pcs; SiC Filters - 50x50x22mm 10PPI, 500 pcs" required></textarea>
-                        <span class="error-message"></span>
-                    </div>
-
+                    
                     <div class="form-group">
                         <label for="quoteMessage">Additional Message (Optional)</label>
                         <textarea id="quoteMessage" name="quoteMessage" rows="4"></textarea>
