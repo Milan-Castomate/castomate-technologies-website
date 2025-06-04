@@ -57,7 +57,7 @@
         "image": "images/products/sic_foam_filter.jpg",
         "details": {
           "application": "Improve casting quality by effectively removing impurities from Gray Iron, Ductile Iron, Sand, Steel, and Aluminum Casting.",
-          "keyFeaturesAndBenefits": [ // Combined as per your text flow
+          "keyFeaturesAndBenefits": [
             "Exceptional Filtration Efficiency",
             "High Thermal Stability (up to 1450°C)",
             "Uniform Flow Control",
@@ -305,11 +305,6 @@
         "image": "images/products/aluminum_paint.jpg",
         "details": {
           "application": "Special paint for foundries that can handle high heat, protecting from corrosion."
-          // Note: Key features for Aluminum Paint were in the original prompt but not this new text.
-          // I'll add them back from the original prompt for completeness if they are still relevant.
-          // Original prompt details: "Extreme heat resistance, bright aluminized finish, corrosion resistant."
-          // User's new text doesn't list key features for this. I will omit them for now to strictly follow new text.
-          // If they want to add features, they can tell me.
         }
       }
     ]
