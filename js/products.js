@@ -217,35 +217,80 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function filterAndSearchProducts() {
-        // This function is now primarily driven by currentFilterCategoryId and searchTerm
-        const searchTerm = productSearchInput ? productSearchInput.value.toLowerCase().trim() : '';
-        let categoriesToDisplay;
+    const searchTerm = productSearchInput ? productSearchInput.value.toLowerCase().trim() : '';
+    // currentFilterCategoryId is a global variable, updated when tabs are clicked
 
+    let categoriesToDisplay;
+    let operationType = 'filter'; // Can be 'filter' or 'search'
+
+    if (searchTerm) {
+        operationType = 'search';
+        // If there's a search term, search across ALL products
+        const searchedProducts = allProductsFlat.filter(product =>
+            product.name.toLowerCase().includes(searchTerm) ||
+            (product.details.application && product.details.application.toLowerCase().includes(searchTerm)) ||
+            (product.details.keyFeatures && Array.isArray(product.details.keyFeatures) && product.details.keyFeatures.some(kf => kf.toLowerCase().includes(searchTerm))) ||
+            (product.details.keyFeaturesAndBenefits && Array.isArray(product.details.keyFeaturesAndBenefits) && product.details.keyFeaturesAndBenefits.some(kf => kf.toLowerCase().includes(searchTerm)))
+            // You can add more fields from product.details to search within if desired
+        );
+
+        if (searchedProducts.length === 0) {
+            productListContainer.innerHTML = '<p class="no-results-message">No products found matching your search criteria: "' + productSearchInput.value + '"</p>';
+            return; // Stop further processing, show no results
+        }
+
+        // Group the searched products by their original categories for display
+        const groupedBySearch = {};
+        searchedProducts.forEach(product => {
+            if (!groupedBySearch[product.categoryId]) {
+                // Find the original category data to get the full categoryName
+                const originalCategory = allCategoriesData.find(cat => cat.categoryId === product.categoryId);
+                groupedBySearch[product.categoryId] = {
+                    categoryId: product.categoryId,
+                    categoryName: originalCategory ? originalCategory.categoryName : 'Search Results', // Fallback category name
+                    products: []
+                };
+            }
+            groupedBySearch[product.categoryId].products.push(product);
+        });
+        categoriesToDisplay = Object.values(groupedBySearch);
+
+        // When searching, you might want to visually indicate that category tabs are less relevant
+        // For now, the active tab remains, but results are global.
+        // Alternatively, you could visually reset tabs:
+        // document.querySelectorAll('.category-tabs .tab-button').forEach(button => button.classList.remove('active-tab'));
+        // const allTab = document.querySelector('.category-tabs .tab-button[data-category-id="all"]');
+        // if (allTab) allTab.classList.add('active-tab');
+        // currentFilterCategoryId = 'all'; // And update the state variable
+
+    } else {
+        // No search term, so filter by the currently selected category tab
+        operationType = 'filter';
         if (currentFilterCategoryId === 'all') {
             categoriesToDisplay = allCategoriesData;
         } else {
-            categoriesToDisplay = allCategoriesData.filter(category => category.categoryId === currentFilterCategoryId);
+            // Ensure we only select categories that actually exist
+            const selectedCat = allCategoriesData.find(category => category.categoryId === currentFilterCategoryId);
+            categoriesToDisplay = selectedCat ? [selectedCat] : []; // Wrap in array for displayProductsByCategory
         }
+    }
 
-        if (searchTerm) {
-            const filteredCategories = [];
-            categoriesToDisplay.forEach(category => {
-                const matchingProducts = category.products.filter(product =>
-                    product.name.toLowerCase().includes(searchTerm) ||
-                    (product.details.application && product.details.application.toLowerCase().includes(searchTerm)) ||
-                    (product.details.keyFeatures && Array.isArray(product.details.keyFeatures) && product.details.keyFeatures.some(kf => kf.toLowerCase().includes(searchTerm))) ||
-                    (product.details.keyFeaturesAndBenefits && Array.isArray(product.details.keyFeaturesAndBenefits) && product.details.keyFeaturesAndBenefits.some(kf => kf.toLowerCase().includes(searchTerm)))
-                );
-                // If searching, we want to show the category if it has matching products
-                if (matchingProducts.length > 0) {
-                    filteredCategories.push({ ...category, products: matchingProducts });
-                }
-            });
-            categoriesToDisplay = filteredCategories;
+    // Check if, after filtering/searching, there are any products to display
+    const hasProductsToDisplay = categoriesToDisplay.some(category => category.products && category.products.length > 0);
+
+    if (!hasProductsToDisplay) {
+        if (operationType === 'search') {
+             productListContainer.innerHTML = '<p class="no-results-message">No products found matching your search criteria: "' + productSearchInput.value + '"</p>';
+        } else if (currentFilterCategoryId !== 'all') {
+             productListContainer.innerHTML = '<p class="no-results-message">No products currently listed in this category.</p>';
+        } else {
+             // This case (All categories, no search, no products) implies empty dataset
+             productListContainer.innerHTML = '<p class="no-results-message">No products available at the moment.</p>';
         }
-        
+    } else {
         displayProductsByCategory(categoriesToDisplay);
     }
+}
 
     // Event listeners for search
     if (productSearchInput) productSearchInput.addEventListener('input', filterAndSearchProducts);
