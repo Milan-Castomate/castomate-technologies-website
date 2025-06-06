@@ -163,6 +163,120 @@ header nav {
 }
 /* .logo-text was removed from HTML */
 
+/* --- NEW STYLES: Add to style.css --- */
+
+/* --- Mega Menu (Products Dropdown) --- */
+.nav-item-dropdown {
+    position: relative; /* Needed for positioning the dropdown */
+}
+
+.mega-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Position it right below the header */
+    left: 0;
+    width: 100%; /* Span the full width of the container */
+    background-color: var(--white-color);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    border-top: 3px solid var(--accent-color);
+    z-index: 999;
+    padding: 20px;
+}
+/* Show menu on hover over the list item */
+.nav-item-dropdown:hover .mega-menu {
+    display: block;
+}
+
+.mega-menu-inner {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Category list column and products display column */
+    gap: 20px;
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
+
+#mega-menu-categories ul {
+    list-style: none;
+    padding: 0;
+}
+#mega-menu-categories .category-item a {
+    display: block;
+    padding: 10px 15px;
+    color: var(--primary-color);
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+#mega-menu-categories .category-item a:hover,
+#mega-menu-categories .category-item.active a {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}
+
+#mega-menu-products h4 {
+    font-size: 1.2em;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+#mega-menu-products ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for products */
+    gap: 15px;
+}
+#mega-menu-products .product-link a {
+    display: block;
+    padding: 8px;
+    color: var(--text-color);
+}
+#mega-menu-products .product-link a:hover {
+    color: var(--accent-color);
+}
+
+
+/* --- Modal Image Gallery --- */
+.modal-image-gallery {
+    margin-bottom: 20px;
+}
+
+.modal-main-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
+
+.modal-thumbnails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.modal-thumbnails .thumbnail-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-speed);
+    opacity: 0.7;
+}
+
+.modal-thumbnails .thumbnail-img:hover {
+    opacity: 1;
+}
+
+.modal-thumbnails .thumbnail-img.active {
+    border-color: var(--accent-color);
+    opacity: 1;
+}
+
 .nav-links {
     display: flex;
 }
