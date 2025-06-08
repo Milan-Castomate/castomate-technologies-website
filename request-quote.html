@@ -45,6 +45,7 @@
         <section class="quote-form-section section-padding">
             <div class="container">
                 <p class="lead-text">Please fill out the form below to request a quote for our products. Our sales team will get back to you shortly.</p>
+                
                 <form id="quoteForm" class="quote-form" action="https://formspree.io/f/xqkookbd" method="POST">
                     <div class="form-row">
                         <div class="form-group">
@@ -76,7 +77,7 @@
                             <label for="productSelection">Select Product(s):</label>
                             <select id="productSelection" name="productSelection" required>
                                 <option value="">-- Select a Product --</option>
-                            </select>
+                                </select>
                             <span class="error-message"></span>
                         </div>
                         <div class="quantity-requirements-group form-sub-group">
@@ -87,11 +88,12 @@
                         <button type="button" id="addProductBtn" class="cta-button alt small-btn">Add Another Product</button>
                     </div>
                     
-                    <div id="additionalProductsContainer"></div>
+                    <div id="additionalProductsContainer">
+                        </div>
 
                     <div class="form-group">
                         <label for="quoteMessage">Additional Message (Optional):</label>
-                        <textarea id="quoteMessage" name="quoteMessage" rows="4"></textarea>
+                        <textarea id="quoteMessage" name="message" rows="4"></textarea>
                     </div>
 
                     <button type="submit" class="cta-button">Submit Quote Request</button>

@@ -5,39 +5,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!megaMenuContainer) return;
 
         try {
-            const response = await fetch('/data/products.json'); // Use root-relative path
+            const response = await fetch('/data/products.json');
             if (!response.ok) throw new Error('Failed to fetch product data for menu');
             const categories = await response.json();
 
             megaMenuContainer.innerHTML = ''; // Clear "Loading..."
 
-            // Create category and product panels
             const categoryPanel = document.createElement('div');
             categoryPanel.id = 'mega-menu-categories';
             const productPanel = document.createElement('div');
             productPanel.id = 'mega-menu-products';
 
-            // Category List
             const categoryList = document.createElement('ul');
             categories.forEach(category => {
                 const categoryItem = document.createElement('li');
                 categoryItem.classList.add('category-item');
                 categoryItem.innerHTML = `<a href="products.html#${category.categoryId}">${category.categoryName}</a>`;
                 
-                // Add hover event to show products for this category
                 categoryItem.addEventListener('mouseenter', () => {
-                    // Highlight active category
                     document.querySelectorAll('#mega-menu-categories .category-item').forEach(item => item.classList.remove('active'));
                     categoryItem.classList.add('active');
 
-                    // Populate products panel
                     productPanel.innerHTML = `<h4>${category.categoryName}</h4>`;
                     const productList = document.createElement('ul');
                     if (category.products && category.products.length > 0) {
-                        category.products.forEach(product => {
+                        category.products.slice(0, 9).forEach(product => { // Show max 9 products
                             const productItem = document.createElement('li');
                             productItem.classList.add('product-link');
-                            // This link will go to the main products page and open the modal
                             productItem.innerHTML = `<a href="products.html#${product.id}">${product.name}</a>`;
                             productList.appendChild(productItem);
                         });
@@ -51,13 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             categoryPanel.appendChild(categoryList);
             
-            // Initial state for product panel
-            productPanel.innerHTML = '<h4>Select a category to view products</h4>';
+            productPanel.innerHTML = '<h4>Hover over a category to view products</h4>';
 
             megaMenuContainer.appendChild(categoryPanel);
             megaMenuContainer.appendChild(productPanel);
             
-            // Trigger mouseenter on the first category to show its products by default
             const firstCategoryItem = megaMenuContainer.querySelector('.category-item');
             if(firstCategoryItem) {
                 firstCategoryItem.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
@@ -68,13 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             megaMenuContainer.innerHTML = '<p>Could not load product categories.</p>';
         }
     }
-    loadMegaMenu(); // Call the function to build the menu
+    loadMegaMenu();
 
 
-    // --- ALL OTHER SCRIPT.JS CODE REMAINS THE SAME ---
-    // (Mobile Menu, Sliders, Form Handlers, etc.)
-    // ... (pasting the rest of the file content for clarity)
-
+    // --- ALL OTHER SCRIPT.JS CODE ---
     const currentYearSpan = document.getElementById('currentYear');
     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
     const menuToggle = document.querySelector('.menu-toggle');
@@ -85,5 +74,5 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateForm(form) { let isValid = true; clearErrorMessages(form); const requiredFields = form.querySelectorAll('[required]'); requiredFields.forEach(field => { let errorMessage = ''; if (field.type === 'checkbox' && !field.checked) { errorMessage = 'This field is required.'; } else if (field.value.trim() === '') { errorMessage = 'This field cannot be empty.'; } else if (field.type === 'email' && !isValidEmail(field.value.trim())) { errorMessage = 'Please enter a valid email address.'; } if (errorMessage) { isValid = false; showError(field, errorMessage); } }); return isValid; } function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); } function showError(field, message) { const errorContainer = field.closest('.form-group'); if (errorContainer) { const errorElement = errorContainer.querySelector('.error-message'); if (errorElement) errorElement.textContent = message; } } function clearErrorMessages(form) { form.querySelectorAll('.error-message').forEach(el => el.textContent = ''); }
     const contactForm = document.getElementById('contactForm'); if (contactForm) { contactForm.addEventListener('submit', function(event) { event.preventDefault(); const formStatus = document.getElementById('formStatus'); if (validateForm(this)) { formStatus.textContent = 'Sending message...'; formStatus.className = 'form-status-message'; setTimeout(() => { formStatus.textContent = 'Message sent successfully! We will get back to you soon.'; formStatus.classList.add('success'); this.reset(); clearErrorMessages(this); }, 1500); } }); }
     const quoteForm = document.getElementById('quoteForm'); if (quoteForm) { quoteForm.addEventListener('submit', function(event) { event.preventDefault(); const form = event.target; const formStatus = document.getElementById('quoteFormStatus'); if (validateForm(form)) { const formData = new FormData(form); formStatus.textContent = 'Submitting request...'; formStatus.className = 'form-status-message'; fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } }).then(response => { if (response.ok) { formStatus.textContent = 'Quote request submitted successfully! Our team will contact you shortly.'; formStatus.classList.add('success'); form.reset(); clearErrorMessages(form); const additionalProductsContainer = document.getElementById('additionalProductsContainer'); if (additionalProductsContainer) additionalProductsContainer.innerHTML = ''; } else { response.json().then(data => { if (data.errors && data.errors.length > 0) { const errorMessages = data.errors.map(error => error.message).join(", "); formStatus.textContent = `Oops! There was a problem: ${errorMessages}`; } else { formStatus.textContent = 'Oops! There was a problem submitting your request. Please try again.'; } formStatus.classList.add('error'); }).catch(() => { formStatus.textContent = 'Oops! There was a problem submitting your request. Please try again later.'; formStatus.classList.add('error'); }); } }).catch(error => { console.error('Error submitting quote form to Formspree:', error); formStatus.textContent = 'Oops! There was a problem submitting your request. Please check your connection and try again.'; formStatus.classList.add('error'); }); } }); }
-    const addProductBtn = document.getElementById('addProductBtn'); const additionalProductsContainer = document.getElementById('additionalProductsContainer'); const productSelectionDropdown = document.getElementById('productSelection'); if (addProductBtn && additionalProductsContainer && productSelectionDropdown) { let productRowCount = 0; addProductBtn.addEventListener('click', () => { productRowCount++; const newProductRow = document.createElement('div'); newProductRow.classList.add('form-row', 'additional-product-item'); newProductRow.innerHTML = `<div class="form-group" style="flex-grow: 1;"><label for="productSelection${productRowCount}" class="sr-only">Select Product ${productRowCount + 1}:</label><select id="productSelection${productRowCount}" name="productSelection${productRowCount}">${productSelectionDropdown.innerHTML}</select></div><div class="form-group" style="flex-grow: 1;"><label for="quantity${productRowCount}" class="sr-only">Quantity / Notes for Product ${productRowCount + 1}:</label><input type="text" id="quantity${productRowCount}" name="quantity${productRowCount}" placeholder="Quantity / Notes"></div><button type="button" class="remove-product-btn"><i class="fas fa-trash-alt"></i></button>`; additionalProductsContainer.appendChild(newProductRow); newProductRow.querySelector('.remove-product-btn').addEventListener('click', function() { this.closest('.additional-product-item').remove(); }); }); }
+    const addProductBtn = document.getElementById('addProductBtn'); const additionalProductsContainer = document.getElementById('additionalProductsContainer'); const productSelectionDropdown = document.getElementById('productSelection'); if (addProductBtn && additionalProductsContainer && productSelectionDropdown) { let productRowCount = 0; addProductBtn.addEventListener('click', () => { productRowCount++; const newProductRow = document.createElement('div'); newProductRow.classList.add('form-row', 'additional-product-item'); newProductRow.innerHTML = `<div class="form-group"><label for="productSelection${productRowCount}" class="sr-only">Select Product ${productRowCount + 1}:</label><select id="productSelection${productRowCount}" name="productSelection${productRowCount}">${productSelectionDropdown.innerHTML}</select></div><div class="form-group"><label for="quantity${productRowCount}" class="sr-only">Quantity / Notes for Product ${productRowCount + 1}:</label><input type="text" id="quantity${productRowCount}" name="quantity${productRowCount}" placeholder="Quantity / Notes"></div><button type="button" class="remove-product-btn"><i class="fas fa-trash-alt"></i></button>`; additionalProductsContainer.appendChild(newProductRow); newProductRow.querySelector('.remove-product-btn').addEventListener('click', function() { this.closest('.additional-product-item').remove(); }); }); }
 });
