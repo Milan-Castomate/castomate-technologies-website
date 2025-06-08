@@ -165,39 +165,49 @@ header nav {
 
 /* --- NEW STYLES: Add to style.css --- */
 
+/* --- NEW & CORRECTED STYLES: Add to style.css --- */
+
 /* --- Mega Menu (Products Dropdown) --- */
 .nav-item-dropdown {
-    position: relative; /* Needed for positioning the dropdown */
+    position: relative; /* This is the anchor for the dropdown menu */
 }
 
 .mega-menu {
     display: none; /* Hidden by default */
     position: absolute;
-    top: 100%; /* Position it right below the header */
-    left: 0;
-    width: 100%; /* Span the full width of the container */
+
+    /* Positioning to center the menu under the nav item */
+    top: 100%; /* Start right after the navigation link */
+    left: 50%; /* Start from the horizontal center of the "Products" link */
+    transform: translateX(-50%); /* Shift left by half its own width to be perfectly centered */
+
+    width: 90vw; /* Make the menu wide, up to 90% of the viewport width */
+    max-width: var(--container-width); /* But don't let it be wider than the main site container */
+
     background-color: var(--white-color);
     box-shadow: 0 8px 15px rgba(0,0,0,0.15);
     border-top: 3px solid var(--accent-color);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
     z-index: 999;
-    padding: 20px;
+    padding: 25px 30px; /* Add some padding inside the menu box */
 }
-/* Show menu on hover over the list item */
+
+/* Show menu on hover over the entire dropdown list item */
 .nav-item-dropdown:hover .mega-menu {
     display: block;
 }
 
+/* This is the grid layout for the content inside the menu */
 .mega-menu-inner {
     display: grid;
-    grid-template-columns: 250px 1fr; /* Category list column and products display column */
-    gap: 20px;
-    max-width: var(--container-width);
-    margin: 0 auto;
+    grid-template-columns: 280px 1fr; /* A wider column for categories and the rest for products */
+    gap: 30px;
 }
 
 #mega-menu-categories ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 #mega-menu-categories .category-item a {
     display: block;
@@ -206,6 +216,7 @@ header nav {
     font-weight: 500;
     border-radius: var(--border-radius);
     transition: background-color var(--transition-speed), color var(--transition-speed);
+    white-space: nowrap; /* Prevent category names from wrapping */
 }
 #mega-menu-categories .category-item a:hover,
 #mega-menu-categories .category-item.active a {
@@ -216,20 +227,21 @@ header nav {
 #mega-menu-products h4 {
     font-size: 1.2em;
     color: var(--accent-color);
-    margin-bottom: 15px;
+    margin: 0 0 15px 0;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
 #mega-menu-products ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for products */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for products within the menu */
     gap: 15px;
 }
 #mega-menu-products .product-link a {
     display: block;
-    padding: 8px;
+    padding: 5px; /* Tighter padding for product links */
     color: var(--text-color);
 }
 #mega-menu-products .product-link a:hover {
