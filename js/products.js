@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let allProductsFlat = [];
     let currentFilterCategoryId = 'all';
 
+    /**
+     * Fetches product data from JSON, populates flat product list,
+     * and triggers initial UI setup.
+     */
     async function fetchProducts() {
         try {
             const response = await fetch('/data/products.json');
@@ -28,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (categoryTabsContainer) {
                 populateCategoryTabs(allCategoriesData);
-                filterAndSearchProducts();
-                handleUrlHash(); // Check for and handle a #product-id in the URL
+                // The initial display is now handled by handleUrlHashOnLoad
+                handleUrlHashOnLoad();
             }
 
             if (quoteProductSelection) {
@@ -44,19 +48,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Logic to open modal from URL hash link
-    function handleUrlHash() {
-        if (window.location.hash) {
-            const productId = window.location.hash.substring(1);
-            const product = allProductsFlat.find(p => p.id === productId);
-            if (product) {
-                setTimeout(() => { openProductModal(product); }, 300);
-            }
+    /**
+     * NEW & IMPROVED: Checks for a hash in the URL on page load and takes action.
+     * It can activate a category tab OR open a product modal.
+     */
+    function handleUrlHashOnLoad() {
+        const hash = window.location.hash.substring(1); // Get hash without '#'
+        
+        if (!hash) {
+            // No hash, just do the default load (all categories)
+            filterAndSearchProducts();
+            return;
         }
+
+        // Check if the hash matches a category ID
+        const categoryTabToActivate = document.querySelector(`.tab-button[data-category-id="${hash}"]`);
+        if (categoryTabToActivate) {
+            // It's a category link! Click the tab to trigger filtering.
+            categoryTabToActivate.click();
+            
+            // Optional: scroll the category title into view after a short delay
+            setTimeout(() => {
+                const categoryTitleElement = document.getElementById(hash);
+                if (categoryTitleElement) {
+                    categoryTitleElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500); // 500ms delay to allow products to render first
+            return;
+        }
+
+        // Check if the hash matches a product ID
+        const productToOpen = allProductsFlat.find(p => p.id === hash);
+        if (productToOpen) {
+            // It's a product link! First, display all products.
+            filterAndSearchProducts();
+            // Then, open the modal after a short delay.
+            setTimeout(() => { openProductModal(productToOpen); }, 300);
+            return;
+        }
+        
+        // If hash is neither a category nor a product, load default
+        filterAndSearchProducts();
     }
-    // Listen for hash changes if user is already on the page
-    window.addEventListener('hashchange', handleUrlHash);
     
+    // Listen for hash changes if user is already on the page
+    window.addEventListener('hashchange', handleUrlHashOnLoad);
+    
+    /**
+     * Creates and populates the category navigation tabs.
+     * @param {Array} categories - The array of category objects.
+     */
     function populateCategoryTabs(categories) {
         if (!categoryTabsContainer) return;
         categoryTabsContainer.innerHTML = '';
@@ -76,13 +117,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /**
+     * Handles clicks on category tabs to set the active filter.
+     * @param {Event} event - The click event from the tab button.
+     */
     function handleTabClick(event) {
-        currentFilterCategoryId = event.target.dataset.categoryId;
-        document.querySelectorAll('.category-tabs .tab-button').forEach(button => button.classList.remove('active-tab'));
+        // Update the URL hash without reloading the page, for better user experience
+        const newHash = event.target.dataset.categoryId;
+        if (history.pushState) {
+            history.pushState(null, null, '#' + newHash);
+        } else {
+            location.hash = '#' + newHash;
+        }
+
+        currentFilterCategoryId = newHash;
+        document.querySelectorAll('.category-tabs .tab-button').forEach(button => {
+            button.classList.remove('active-tab');
+        });
         event.target.classList.add('active-tab');
         filterAndSearchProducts();
     }
 
+    /**
+     * Displays products on the page, grouped by their categories.
+     * @param {Array} categoriesToDisplay - An array of category objects to display.
+     */
     function displayProductsByCategory(categoriesToDisplay) {
         if (!productListContainer) return;
         productListContainer.innerHTML = ''; 
@@ -121,16 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.view-details-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const productId = event.target.dataset.productId;
-                const categoryId = event.target.dataset.categoryId;
-                const category = allCategoriesData.find(cat => cat.categoryId === categoryId);
-                if (category) {
-                    const product = category.products.find(p => p.id === productId);
-                    if (product) openProductModal(product);
-                }
+                window.location.hash = productId; // This will trigger our hashchange listener
             });
         });
     }
     
+    /**
+     * Opens and populates the product detail modal.
+     * @param {Object} product - The product object to display.
+     */
     function openProductModal(product) {
         if (!productModal || !product || !product.details) return;
         document.getElementById('modalProductName').textContent = product.name;
@@ -158,14 +216,29 @@ document.addEventListener('DOMContentLoaded', () => {
         productModal.style.display = 'block'; document.body.style.overflow = 'hidden';
     }
     
-    function closeProductModal() { if (!productModal) return; productModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+    // --- Helper & Utility Functions ---
+    function closeProductModal() { 
+        if (!productModal) return; 
+        productModal.style.display = 'none'; 
+        document.body.style.overflow = 'auto';
+        // Clear the hash from the URL
+        if(history.pushState) {
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        } else {
+            window.location.hash = '';
+        }
+    }
     function truncateText(text, maxLength) { if (!text) return ''; return text.length > maxLength ? text.substring(0, maxLength) + '...' : text; }
     function formatDetailValue(value) { if (Array.isArray(value)) { if (value.length === 0) return '<p>N/A</p>'; return `<ul>${value.map(item => `<li>${item}</li>`).join('')}</ul>`; } return `<p>${value || 'N/A'}</p>`; }
     
+    // --- Event Listeners ---
     if (closeModalButton) closeModalButton.addEventListener('click', closeProductModal);
     if (productModal) window.addEventListener('click', (event) => { if (event.target === productModal) closeProductModal(); });
     document.addEventListener('keydown', function(event) { if (event.key === "Escape" && productModal && productModal.style.display === 'block') closeProductModal(); });
 
+    /**
+     * Filters and searches products based on user input and selected category.
+     */
     function filterAndSearchProducts() {
         const searchTerm = productSearchInput ? productSearchInput.value.toLowerCase().trim() : '';
         let categoriesToDisplay;
@@ -179,14 +252,24 @@ document.addEventListener('DOMContentLoaded', () => {
             categoriesToDisplay = Object.values(groupedBySearch);
         } else {
             operationType = 'filter';
-            if (currentFilterCategoryId === 'all') { categoriesToDisplay = allCategoriesData; } else { const selectedCat = allCategoriesData.find(category => category.categoryId === currentFilterCategoryId); categoriesToDisplay = selectedCat ? [selectedCat] : []; }
+            if (currentFilterCategoryId === 'all') {
+                categoriesToDisplay = allCategoriesData;
+            } else {
+                const selectedCat = allCategoriesData.find(category => category.categoryId === currentFilterCategoryId);
+                categoriesToDisplay = selectedCat ? [selectedCat] : [];
+            }
         }
         const hasProductsToDisplay = categoriesToDisplay && categoriesToDisplay.some(category => category.products && category.products.length > 0);
         if (!hasProductsToDisplay) { if (operationType === 'search') { productListContainer.innerHTML = `<p class="no-results-message">No products found matching: "${productSearchInput.value}"</p>`; } else if (currentFilterCategoryId !== 'all') { productListContainer.innerHTML = `<p class="no-results-message">No products currently listed in this category.</p>`; } else { productListContainer.innerHTML = `<p class="no-results-message">No products available at the moment.</p>`; } } else { displayProductsByCategory(categoriesToDisplay); }
     }
+
     if (productSearchInput) productSearchInput.addEventListener('input', filterAndSearchProducts);
     if (searchBtn) searchBtn.addEventListener('click', filterAndSearchProducts);
     
+    /**
+     * Populates the product selection dropdown on the "Request a Quote" page.
+     * @param {Array} products - A flat array of all product objects.
+     */
     function populateQuoteProductDropdown(products) {
         if (!quoteProductSelection) return;
         quoteProductSelection.innerHTML = '<option value="">-- Select a Product --</option>';
@@ -198,5 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // --- Initial Call ---
     fetchProducts();
 });
