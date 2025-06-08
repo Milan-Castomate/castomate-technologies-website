@@ -20,7 +20,7 @@
       },
       {
         "id": "apc-powder",
-        "name": "APC Powder (Anti-Piping Compound Powder)",
+        "name": "APC Powder",
         "images": [
           "images/products/apc_powder_1.jpg",
           "images/products/apc_powder_2.jpg",
@@ -41,11 +41,7 @@
       {
         "id": "sic-ceramic-foam-filter",
         "name": "SiC Ceramic Foam Filter",
-        "images": [
-          "images/products/sic_foam_filter_1.jpg",
-          "images/products/sic_foam_filter_2.jpg",
-          "images/products/sic_foam_filter_3.jpg"
-        ],
+        "images": ["images/products/sic_foam_filter_1.jpg", "images/products/sic_foam_filter_2.jpg", "images/products/sic_foam_filter_3.jpg"],
         "details": {
           "application": "Improve casting quality by effectively removing impurities from Gray Iron, Ductile Iron, Sand, Steel, and Aluminum Casting.",
           "keyFeaturesAndBenefits": ["Exceptional Filtration Efficiency", "High Thermal Stability (up to 1450°C)", "Uniform Flow Control", "Reduced Casting Defects", "Chemical Inertness"],
@@ -55,11 +51,7 @@
       {
         "id": "ceramic-filter",
         "name": "Ceramic Filter",
-        "images": [
-          "images/products/ceramic_filter_1.jpg",
-          "images/products/ceramic_filter_2.jpg",
-          "images/products/ceramic_filter_3.jpg"
-        ],
+        "images": ["images/products/ceramic_filter_1.jpg", "images/products/ceramic_filter_2.jpg", "images/products/ceramic_filter_3.jpg"],
         "details": {
           "application": "Ensure high-quality filtration and impeccable castings for versatile applications, crafted in-house for top-notch quality.",
           "keyFeatures": ["In-House Manufacturing", "High Porosity", "Uniform Pore Size Distribution", "Chemical Inertness"],
@@ -70,11 +62,7 @@
       {
         "id": "fiberglass-mesh-filter",
         "name": "Fiberglass Mesh Filter",
-        "images": [
-          "images/products/fiberglass_mesh_filter_1.jpg",
-          "images/products/fiberglass_mesh_filter_2.jpg",
-          "images/products/fiberglass_mesh_filter_3.jpg"
-        ],
+        "images": ["images/products/fiberglass_mesh_filter_1.jpg", "images/products/fiberglass_mesh_filter_2.jpg", "images/products/fiberglass_mesh_filter_3.jpg"],
         "details": {
           "application": "An effective and economical solution for filtering molten non-ferrous metals and alloys, including Aluminum Casting, Bronze Casting, and other Non-Ferrous Metal Casting.",
           "keyFeatures": ["High Temperature Resistance", "Effective Filtration", "Good Flow Rate", "Economical Solution", "Versatile Application"],
@@ -85,11 +73,7 @@
       {
         "id": "zircon-foam-filter",
         "name": "Zircon Foam Filter",
-        "images": [
-          "images/products/zircon_foam_filter_1.jpg",
-          "images/products/zircon_foam_filter_2.jpg",
-          "images/products/zircon_foam_filter_3.jpg"
-        ],
+        "images": ["images/products/zircon_foam_filter_1.jpg", "images/products/zircon_foam_filter_2.jpg", "images/products/zircon_foam_filter_3.jpg"],
         "details": {
           "application": "Primarily used for filtering molten steel and high-temperature alloys, where its high refractoriness and chemical stability are crucial for removing inclusions and improving casting integrity.",
           "keyFeatures": ["High Refractoriness", "Excellent Chemical Stability", "Effective Inclusion Removal", "Good Thermal Shock Resistance", "Uniform Pore Structure"],
@@ -106,11 +90,7 @@
       {
         "id": "core-fix",
         "name": "Core Fix",
-        "images": [
-          "images/products/core_fix_1.jpg",
-          "images/products/core_fix_2.jpg",
-          "images/products/core_fix_3.jpg"
-        ],
+        "images": ["images/products/core_fix_1.jpg", "images/products/core_fix_2.jpg", "images/products/core_fix_3.jpg"],
         "details": {
           "application": "Enhance cores by providing adhesion, surface finish, and assembly aid for creating cores and surface coating.",
           "keyFeatures": ["Adhesive Properties", "Thermal Stability", "Surface Finish Enhancement", "Compatibility with Various Sands"],
@@ -120,11 +100,7 @@
       {
         "id": "foundry-chaplets",
         "name": "Foundry Chaplets",
-        "images": [
-          "images/products/foundry_chaplets_1.jpg",
-          "images/products/foundry_chaplets_2.jpg",
-          "images/products/foundry_chaplets_3.jpg"
-        ],
+        "images": ["images/products/foundry_chaplets_1.jpg", "images/products/foundry_chaplets_2.jpg", "images/products/foundry_chaplets_3.jpg"],
         "details": {
           "application": "Provide essential supports for core stability and placement within molds to ensure proper core alignment.",
           "keyFeatures": ["High Strength and Durability", "Precise Dimensions", "Corrosion Resistance", "Wide Range of Sizes and Designs"],
@@ -135,11 +111,7 @@
       {
         "id": "core-box-air-vents",
         "name": "Core Box Air Vents",
-        "images": [
-          "images/products/core_box_air_vents_1.jpg",
-          "images/products/core_box_air_vents_2.jpg",
-          "images/products/core_box_air_vents_3.jpg"
-        ],
+        "images": ["images/products/core_box_air_vents_1.jpg", "images/products/core_box_air_vents_2.jpg", "images/products/core_box_air_vents_3.jpg"],
         "details": {
           "application": "Facilitate gas escape during core-making to prevent defects.",
           "keyFeatures": ["Superior Ventilation", "Durable Construction (Stainless steel or brass)", "Corrosion Resistance", "Variety of Designs (Slotted, perforated, or mesh)"],
@@ -149,11 +121,7 @@
       {
         "id": "foundry-pattern-letters-plastic",
         "name": "Foundry Pattern Letters (Plastic)",
-        "images": [
-          "images/products/pattern_letters_1.jpg",
-          "images/products/pattern_letters_2.jpg",
-          "images/products/pattern_letters_3.jpg"
-        ],
+        "images": ["images/products/pattern_letters_1.jpg", "images/products/pattern_letters_2.jpg", "images/products/pattern_letters_3.jpg"],
         "details": {
           "application": "For marking and identifying casting patterns with part numbers, logos, and identifiers.",
           "keyFeatures": ["Lightweight and Durable (High-quality plastic)", "Accurate Dimensions", "Customizable Options", "Corrosion Resistance"],
@@ -170,11 +138,7 @@
       {
         "id": "perlite-ore",
         "name": "Perlite Ore (Slag Removal)",
-        "images": [
-          "images/products/perlite_ore_1.jpg",
-          "images/products/perlite_ore_2.jpg",
-          "images/products/perlite_ore_3.jpg"
-        ],
+        "images": ["images/products/perlite_ore_1.jpg", "images/products/perlite_ore_2.jpg", "images/products/perlite_ore_3.jpg"],
         "details": {
           "application": "Used for slag removal and as an insulating cover in applications like Ladle topping, hot topping & risering, topping compounds, and molding sand.",
           "advantages": ["Prevents heat loss", "Assists in ingot topping", "Refractory production", "Lightweight castable", "Enhances feeding systems"]
@@ -183,11 +147,7 @@
       {
         "id": "gpc-artificial-graphite",
         "name": "GPC (Artificial Graphite)",
-        "images": [
-          "images/products/gpc_graphite_1.jpg",
-          "images/products/gpc_graphite_2.jpg",
-          "images/products/gpc_graphite_3.jpg"
-        ],
+        "images": ["images/products/gpc_graphite_1.jpg", "images/products/gpc_graphite_2.jpg", "images/products/gpc_graphite_3.jpg"],
         "details": {
           "application": "High-carbon material for foundries and steelmaking, used for carbon adjustment, heat resistance, and conductivity.",
           "keyFeatures": ["Carbon Content (98%-99.5%)", "Low Sulfur Content", "High Thermal Conductivity", "Electrically Conductive"],
@@ -204,11 +164,7 @@
       {
         "id": "graphite-electrodes-arc-furnace",
         "name": "Graphite Electrodes for Arc Furnace",
-        "images": [
-          "images/products/graphite_electrodes_1.jpg",
-          "images/products/graphite_electrodes_2.jpg",
-          "images/products/graphite_electrodes_3.jpg"
-        ],
+        "images": ["images/products/graphite_electrodes_1.jpg", "images/products/graphite_electrodes_2.jpg", "images/products/graphite_electrodes_3.jpg"],
         "details": {
           "application": "Essential for electric arc furnaces (EAFs), Ladle Furnaces (LF), and ferroalloy production.",
           "keyFeatures": ["High Thermal Conductivity", "Low Electrical Resistance", "Superior Strength and Durability", "Oxidation Resistance", "Wide Size Range"],
@@ -225,11 +181,7 @@
       {
         "id": "steel-shots",
         "name": "Steel Shots",
-        "images": [
-          "images/products/steel_shots_1.jpg",
-          "images/products/steel_shots_2.jpg",
-          "images/products/steel_shots_3.jpg"
-        ],
+        "images": ["images/products/steel_shots_1.jpg", "images/products/steel_shots_2.jpg", "images/products/steel_shots_3.jpg"],
         "details": {
           "application": "Spherical abrasives for cleaning and finishing metal castings, used for Sand & scale removal, surface preparation, shot peening, deburring & deflashing.",
           "keyFeatures": ["Material (High-carbon steel)", "Hardness (40-55 HRC, customizable)", "Grain Size (S-110 to S-660)"],
@@ -238,12 +190,8 @@
       },
       {
         "id": "aluminum-paint-coat",
-        "name": "Aluminum Paint / Coat (Aluminized Coating)",
-        "images": [
-          "images/products/aluminum_paint_1.jpg",
-          "images/products/aluminum_paint_2.jpg",
-          "images/products/aluminum_paint_3.jpg"
-        ],
+        "name": "Aluminum Paint / Coat",
+        "images": ["images/products/aluminum_paint_1.jpg", "images/products/aluminum_paint_2.jpg", "images/products/aluminum_paint_3.jpg"],
         "details": {
           "application": "Special paint for foundries that can handle high heat, protecting from corrosion."
         }

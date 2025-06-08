@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             categories.forEach(category => {
                 const categoryItem = document.createElement('li');
                 categoryItem.classList.add('category-item');
-                // Link to products page with categoryId as a hash to scroll to it
                 categoryItem.innerHTML = `<a href="products.html#${category.categoryId}">${category.categoryName}</a>`;
                 
                 categoryItem.addEventListener('mouseenter', () => {
@@ -30,12 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     productPanel.innerHTML = `<h4>${category.categoryName}</h4>`;
                     const productList = document.createElement('ul');
                     if (category.products && category.products.length > 0) {
-                        // Show max 9 products, or fewer if not available
-                        const productsToShow = category.products.slice(0, 9);
+                        const productsToShow = category.products.slice(0, 9); // Limit to 9 products
                         productsToShow.forEach(product => {
                             const productItem = document.createElement('li');
                             productItem.classList.add('product-link');
-                            // This link will go to the main products page and open the modal via the hash
                             productItem.innerHTML = `<a href="products.html#${product.id}">${product.name}</a>`;
                             productList.appendChild(productItem);
                         });
@@ -54,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             megaMenuContainer.appendChild(categoryPanel);
             megaMenuContainer.appendChild(productPanel);
             
-            // Trigger mouseenter on the first category to show its products by default
             const firstCategoryItem = megaMenuContainer.querySelector('.category-item');
             if(firstCategoryItem) {
                 firstCategoryItem.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
@@ -68,8 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMegaMenu();
 
 
-    // --- ALL OTHER SCRIPT.JS CODE REMAINS ---
-    // (This part is identical to the last full script.js I provided)
+    // --- ALL OTHER SCRIPT.JS CODE ---
     const currentYearSpan = document.getElementById('currentYear');
     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
     const menuToggle = document.querySelector('.menu-toggle');
