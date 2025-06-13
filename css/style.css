@@ -477,7 +477,7 @@ header nav {
 .product-selection-wrapper #addProductBtn { white-space: nowrap; flex-shrink: 0; height: 48px; padding: 0 15px; display: flex; align-items: center; justify-content: center; font-size: 1em; line-height: 1; }
 #additionalProductsContainer .form-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
 #additionalProductsContainer .form-row .form-group { flex-grow: 1; flex-basis: 0; margin-bottom: 0; }
-#additionalProductsContainer .remove-product-btn { background-color: var(--accent-color-alt); color: white; border: none; border-radius: var(--border-radius); cursor: pointer; height: 48px; width: 48px; padding: 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+#additionalProductsContainer .remove-product-btn { background-color: var(--accent-color-alt); color: white; border: none; border-radius: var(--border-radius); cursor: pointer; height: 48px; padding: 0 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1;}
 #additionalProductsContainer .remove-product-btn i { line-height: 1; font-size: 1.1em; }
 
 /* Footer */
