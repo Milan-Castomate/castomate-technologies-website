@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             newProductRow.classList.add('form-row', 'additional-product-item');
             
             // === THIS IS THE SECTION WITH THE FIX ===
+            // The "Remove" button now includes text to help match the "Add" button's size.
             newProductRow.innerHTML = `
                 <div class="form-group">
                     <label for="productSelection${productRowCount}" class="sr-only">Select Product ${productRowCount + 1}:</label>
@@ -110,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <button type="button" class="remove-product-btn">Remove</button>
             `;
-            // I have changed the button to include the word "Remove" for better size matching.
             // === END OF FIX ===
 
             additionalProductsContainer.appendChild(newProductRow);
