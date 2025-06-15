@@ -469,24 +469,39 @@ header nav {
 .product-selection-wrapper #addProductBtn { white-space: nowrap; flex-shrink: 0; height: 48px; padding: 0 15px; display: flex; align-items: center; justify-content: center; font-size: 1em; line-height: 1; }
 #additionalProductsContainer .form-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
 #additionalProductsContainer .form-row .form-group { flex-grow: 1; flex-basis: 0; margin-bottom: 0; }
+/* In style.css, find and REPLACE this entire rule */
 #additionalProductsContainer .remove-product-btn {
-    background-color: var(--accent-color-alt);
+    background-color: var(--accent-color-alt); /* Red color */
     color: white;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    margin-left: 0;
+    
+    /* Make its appearance consistent with other buttons */
     height: 48px;
-    padding: 0 15px; /* Same horizontal padding as Add button */
+    padding: 0 25px; /* Use similar horizontal padding to other buttons */
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 0.9em; /* Match .small-btn for consistency */
-    gap: 8px; /* Space between text and icon */
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
-#additionalProductsContainer .remove-product-btn i {
-    line-height: 1;
+
+/* Optional: Add a hover effect */
+#additionalProductsContainer .remove-product-btn:hover {
+    background-color: #a13125; /* A slightly darker red */
+    transform: translateY(-2px);
+}
+
+/* Ensure the form groups in dynamic rows have correct flex properties */
+#additionalProductsContainer .form-row .form-group {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-bottom: 0; 
 }
 
 /* Footer */
