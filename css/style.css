@@ -431,7 +431,7 @@ header nav {
     cursor: pointer;
     margin-left: 0;
     height: 48px;
-    padding: 0 25px; /* Use similar horizontal padding to other buttons */
+    padding: 0 25px; /* Has horizontal padding */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -441,6 +441,9 @@ header nav {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+#additionalProductsContainer .remove-product-btn i {
+    line-height: 1;
 }
 
 /* Footer */
