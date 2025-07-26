@@ -17,7 +17,7 @@
     --font-secondary: 'Montserrat', sans-serif;
 
     --base-font-size: 16px;
-    --header-height: 80px;
+    --header-height: 105px; /* Increased for larger logo */
     --container-width: 1140px;
     --border-radius: 5px;
     --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -157,7 +157,7 @@ header nav {
     font-size: 1.5em;
 }
 .logo {
-    height: 85px;
+    height: 85px; /* Kept your preferred larger size */
 }
 
 .nav-links {
@@ -209,8 +209,8 @@ header nav {
     position: absolute;
     top: 100%;
     left: 0;
-    width: auto;
-    min-width: 600px;
+    width: auto; 
+    min-width: 600px; 
     background-color: var(--white-color);
     box-shadow: 0 8px 15px rgba(0,0,0,0.15);
     border-top: 3px solid var(--accent-color);
@@ -420,32 +420,48 @@ header nav {
 .product-selection-wrapper .quantity-requirements-group textarea#quantity { resize: none; }
 .product-selection-wrapper { display: flex; align-items: center; gap: 15px; }
 .product-selection-wrapper .form-sub-group { flex-grow: 1; flex-basis: 0; }
-.product-selection-wrapper #addProductBtn { white-space: nowrap; flex-shrink: 0; height: 48px; padding: 0px 15px; display: flex; align-items: center; justify-content: center; font-size: 1em; line-height: 1; width: 200px; }
-#additionalProductsContainer .form-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-#additionalProductsContainer .form-row .form-group { flex-grow: 1; flex-basis: 0; margin-bottom: 0; }
+.product-selection-wrapper #addProductBtn,
 #additionalProductsContainer .remove-product-btn {
-    background-color: var(--accent-color-alt);
-    color: white;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    margin-left: 0;
+    white-space: nowrap; 
+    flex-shrink: 0; 
     height: 48px;
-    padding: 0 25px; /* Has horizontal padding */
+    width: 220px; /* Consistent fixed width for both buttons */
+    padding: 0 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
     font-size: 1em;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
-	width: 200px;
-}
-#additionalProductsContainer .remove-product-btn i {
     line-height: 1;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    cursor: pointer;
 }
+#additionalProductsContainer .form-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+#additionalProductsContainer .form-row .form-group { flex-grow: 1; flex-basis: 0; margin-bottom: 0; }
+#additionalProductsContainer .remove-product-btn {
+    background-color: var(--accent-color-alt);
+    color: white;
+    border: 2px solid var(--accent-color-alt);
+    gap: 8px;
+}
+#additionalProductsContainer .remove-product-btn:hover {
+    background-color: #a13125;
+    border-color: #a13125;
+    transform: translateY(-2px);
+}
+.product-selection-wrapper #addProductBtn {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+.product-selection-wrapper #addProductBtn:hover {
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}
+
 
 /* Footer */
 footer { background-color: var(--primary-color); color: var(--light-grey); padding: 50px 0 20px; }
@@ -473,7 +489,7 @@ footer { background-color: var(--primary-color); color: var(--light-grey); paddi
     .about-image img { max-width: 80%; margin-left: auto; margin-right: auto; }
     .quote-form .form-row { flex-direction: column; gap: 0; }
     .product-selection-wrapper { flex-direction: column; align-items: stretch; }
-    .product-selection-wrapper #addProductBtn { margin-top: 10px; }
+    .product-selection-wrapper #addProductBtn { margin-top: 10px; width: 100%; }
     #additionalProductsContainer .form-row { flex-direction: column; align-items: stretch; }
     #additionalProductsContainer .form-row .form-group { margin-bottom: 15px; }
     #additionalProductsContainer .remove-product-btn { margin-left: 0; width: 100%; }
