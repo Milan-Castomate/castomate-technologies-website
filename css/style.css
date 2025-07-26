@@ -17,7 +17,7 @@
     --font-secondary: 'Montserrat', sans-serif;
 
     --base-font-size: 16px;
-    --header-height: 105px; /* Increased for larger logo */
+    --header-height: 80px;
     --container-width: 1140px;
     --border-radius: 5px;
     --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -157,7 +157,7 @@ header nav {
     font-size: 1.5em;
 }
 .logo {
-    height: 85px; /* Kept your preferred larger size */
+    height: 50px;
 }
 
 .nav-links {
@@ -420,48 +420,32 @@ header nav {
 .product-selection-wrapper .quantity-requirements-group textarea#quantity { resize: none; }
 .product-selection-wrapper { display: flex; align-items: center; gap: 15px; }
 .product-selection-wrapper .form-sub-group { flex-grow: 1; flex-basis: 0; }
-.product-selection-wrapper #addProductBtn,
-#additionalProductsContainer .remove-product-btn {
-    white-space: nowrap; 
-    flex-shrink: 0; 
-    height: 48px;
-    width: 220px; /* Consistent fixed width for both buttons */
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1em;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1;
-    border-radius: var(--border-radius);
-    transition: background-color var(--transition-speed), transform var(--transition-speed);
-    cursor: pointer;
-}
+.product-selection-wrapper #addProductBtn { white-space: nowrap; flex-shrink: 0; height: 48px; padding: 0 15px; display: flex; align-items: center; justify-content: center; font-size: 1em; line-height: 1; }
 #additionalProductsContainer .form-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
 #additionalProductsContainer .form-row .form-group { flex-grow: 1; flex-basis: 0; margin-bottom: 0; }
 #additionalProductsContainer .remove-product-btn {
     background-color: var(--accent-color-alt);
     color: white;
-    border: 2px solid var(--accent-color-alt);
-    gap: 8px;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    margin-left: 0;
+    height: 48px;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 #additionalProductsContainer .remove-product-btn:hover {
     background-color: #a13125;
-    border-color: #a13125;
     transform: translateY(-2px);
 }
-.product-selection-wrapper #addProductBtn {
-    background-color: transparent;
-    border: 2px solid var(--accent-color);
-    color: var(--accent-color);
-}
-.product-selection-wrapper #addProductBtn:hover {
-    background-color: var(--accent-color);
-    color: var(--white-color);
-}
-
 
 /* Footer */
 footer { background-color: var(--primary-color); color: var(--light-grey); padding: 50px 0 20px; }
