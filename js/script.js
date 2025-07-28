@@ -1,145 +1,156 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- General UI Scripts ---
-    const currentYearSpan = document.getElementById('currentYear');
-    if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
-    }
+    const productListContainer = document.getElementById('product-list-container');
+    const productModal = document.getElementById('productModal');
+    const closeModalButton = document.querySelector('.modal .close-button');
+    const quoteProductSelection = document.getElementById('productSelection');
 
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-    }
+    let allProductsData = [];
 
-    // --- Homepage Sliders ---
-    const heroSlider = document.querySelector('.hero-slider');
-    if(heroSlider) {
-        const slides = heroSlider.querySelectorAll('.slide');
-        const prevSlideBtn = document.querySelector('.hero .prev-slide');
-        const nextSlideBtn = document.querySelector('.hero .next-slide');
-        let currentSlide = 0;
-        let slideInterval;
+    async function fetchAndDisplayProducts() {
+        if (!productListContainer) return;
 
-        function showSlide(index) { slides.forEach((slide, i) => { slide.classList.remove('active'); if (i === index) slide.classList.add('active'); }); }
-        function nextSlideFn() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
-        function prevSlideFn() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }
-        function resetSlideInterval() { if (slides.length > 1) { clearInterval(slideInterval); slideInterval = setInterval(nextSlideFn, 7000); } }
-        if (slides.length > 0) { showSlide(currentSlide); if (prevSlideBtn && nextSlideBtn) { prevSlideBtn.addEventListener('click', () => { prevSlideFn(); resetSlideInterval(); }); nextSlideBtn.addEventListener('click', () => { nextSlideFn(); resetSlideInterval(); }); } if (slides.length > 1) slideInterval = setInterval(nextSlideFn, 7000); }
-    }
+        try {
+            const response = await fetch('/data/products.json');
+            if (!response.ok) throw new Error('Failed to fetch product data');
+            const categories = await response.json();
 
-    const testimonialSlider = document.querySelector('.testimonial-slider-container');
-    if(testimonialSlider) {
-        const testimonials = testimonialSlider.querySelectorAll('.testimonial');
-        const prevTestimonialBtn = document.querySelector('.testimonial-controls .prev-testimonial');
-        const nextTestimonialBtn = document.querySelector('.testimonial-controls .next-testimonial');
-        let currentTestimonial = 0;
-        function showTestimonial(index) { testimonials.forEach((testimonial, i) => { testimonial.classList.remove('active'); if (i === index) testimonial.classList.add('active'); }); }
-        if (testimonials.length > 0) { showTestimonial(currentTestimonial); if (prevTestimonialBtn && nextTestimonialBtn) { prevTestimonialBtn.addEventListener('click', () => { currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length; showTestimonial(currentTestimonial); }); nextTestimonialBtn.addEventListener('click', () => { currentTestimonial = (currentTestimonial + 1) % testimonials.length; showTestimonial(currentTestimonial); }); } }
-    }
+            allProductsData = categories; // Store for modal
+            productListContainer.innerHTML = ''; // Clear "Loading..."
 
-    // --- Shared Form Validation Helper Functions ---
-    function validateForm(form) { let isValid = true; clearErrorMessages(form); const requiredFields = form.querySelectorAll('[required]'); requiredFields.forEach(field => { let errorMessage = ''; if (field.type === 'checkbox' && !field.checked) { errorMessage = 'This field is required.'; } else if (field.value.trim() === '') { errorMessage = 'This field cannot be empty.'; } else if (field.type === 'email' && !isValidEmail(field.value.trim())) { errorMessage = 'Please enter a valid email address.'; } if (errorMessage) { isValid = false; showError(field, errorMessage); } }); return isValid; }
-    function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
-    function showError(field, message) { const errorContainer = field.closest('.form-group'); if (errorContainer) { const errorElement = errorContainer.querySelector('.error-message'); if (errorElement) errorElement.textContent = message; } }
-    function clearErrorMessages(form) { form.querySelectorAll('.error-message').forEach(el => el.textContent = ''); }
-
-    // --- Contact Form AJAX Submission ---
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formStatus = document.getElementById('formStatus');
-            if (validateForm(form)) {
-                const formData = new FormData(form);
-                formStatus.textContent = 'Sending message...';
-                formStatus.className = 'form-status-message';
-                fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } })
-                    .then(response => {
-                        if (response.ok) {
-                            formStatus.textContent = 'Message sent successfully! We will get back to you soon.';
-                            formStatus.classList.add('success');
-                            form.reset();
-                            clearErrorMessages(form);
-                        } else {
-                            response.json().then(data => {
-                                const errorMsg = (data.errors) ? data.errors.map(e => e.message).join(", ") : "Please try again.";
-                                formStatus.textContent = `Oops! There was a problem: ${errorMsg}`;
-                                formStatus.classList.add('error');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        formStatus.textContent = 'Oops! There was a problem submitting your message.';
-                        formStatus.classList.add('error');
-                        console.error('Error submitting contact form:', error);
-                    });
+            if (categories.length === 0) {
+                 productListContainer.innerHTML = '<p class="no-results-message">No products are available at the moment.</p>';
+                 return;
             }
-        });
-    }
-    
-    // --- Request a Quote Form AJAX Submission ---
-    const quoteForm = document.getElementById('quoteForm');
-    if (quoteForm) {
-        quoteForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formStatus = document.getElementById('quoteFormStatus');
-            if (validateForm(form)) {
-                const formData = new FormData(form);
-                formStatus.textContent = 'Submitting request...';
-                formStatus.className = 'form-status-message';
-                fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } })
-                    .then(response => {
-                        if (response.ok) {
-                            formStatus.textContent = 'Quote request submitted successfully! Our team will contact you shortly.';
-                            formStatus.classList.add('success');
-                            form.reset();
-                            clearErrorMessages(form);
-                            const additionalProductsContainer = document.getElementById('additionalProductsContainer');
-                            if (additionalProductsContainer) additionalProductsContainer.innerHTML = '';
-                        } else {
-                            response.json().then(data => {
-                                const errorMsg = (data.errors) ? data.errors.map(e => e.message).join(", ") : "Please try again.";
-                                formStatus.textContent = `Oops! There was a problem: ${errorMsg}`;
-                                formStatus.classList.add('error');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        formStatus.textContent = 'Oops! There was a problem submitting your request.';
-                        formStatus.classList.add('error');
-                        console.error('Error submitting quote form:', error);
-                    });
-            }
-        });
-    }
-    
-    // --- "Request a Quote" Page - Add/Remove Product Functionality ---
-    const addProductBtn = document.getElementById('addProductBtn');
-    const additionalProductsContainer = document.getElementById('additionalProductsContainer');
-    const productSelectionDropdown = document.getElementById('productSelection');
-    if (addProductBtn && additionalProductsContainer && productSelectionDropdown) {
-        let productRowCount = 0;
-        addProductBtn.addEventListener('click', () => {
-            productRowCount++;
-            const newProductRow = document.createElement('div');
-            newProductRow.classList.add('form-row', 'additional-product-item');
-            newProductRow.innerHTML = `
-                <div class="form-group">
-                    <select name="productSelection${productRowCount}">${productSelectionDropdown.innerHTML}</select>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="quantity${productRowCount}" placeholder="Quantity / Notes">
-                </div>
-                <button type="button" class="remove-product-btn"><i class="fas fa-trash-alt"></i></button>
-            `;
-            additionalProductsContainer.appendChild(newProductRow);
-            newProductRow.querySelector('.remove-product-btn').addEventListener('click', function() {
-                this.closest('.additional-product-item').remove();
+
+            categories.forEach(category => {
+                const categorySection = document.createElement('section');
+                categorySection.classList.add('product-category-section');
+                categorySection.id = category.categoryId;
+
+                const categoryHeader = document.createElement('h2');
+                categoryHeader.classList.add('category-title-on-page');
+                categoryHeader.textContent = category.categoryName;
+                categorySection.appendChild(categoryHeader);
+
+                const productGrid = document.createElement('div');
+                productGrid.classList.add('product-grid-for-category');
+                
+                category.products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    
+                    const productImage = product.image || 'images/product-placeholder.jpg';
+                    
+                    productCard.innerHTML = `
+                        <img src="${productImage}" alt="${product.name}" loading="lazy">
+                        <div class="product-card-content">
+                            <h3>${product.name}</h3>
+                            <p>${truncateText(product.details.application, 100)}</p>
+                            <button class="cta-button view-details-btn" data-product-id="${product.id}">View Details</button>
+                        </div>
+                    `;
+                    productGrid.appendChild(productCard);
+                });
+                categorySection.appendChild(productGrid);
+                productListContainer.appendChild(categorySection);
             });
-        });
+
+            // Add event listeners after cards are created
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.target.dataset.productId;
+                    openProductModalById(productId);
+                });
+            });
+
+        } catch (error) {
+            console.error("Error loading products page:", error);
+            productListContainer.innerHTML = '<p class="error-message">Could not load products. Please try again later.</p>';
+        }
     }
+
+    function openProductModalById(productId) {
+        let productToShow = null;
+        for (const category of allProductsData) {
+            const found = category.products.find(p => p.id === productId);
+            if (found) {
+                productToShow = found;
+                break;
+            }
+        }
+
+        if (productToShow) {
+            openProductModal(productToShow);
+        }
+    }
+
+    function openProductModal(product) {
+        if (!productModal || !product || !product.details) return;
+        document.getElementById('modalProductName').textContent = product.name;
+        const detailsContainer = document.getElementById('modalProductDetails');
+        detailsContainer.innerHTML = '';
+
+        const modalProductImage = document.getElementById('modalProductImage');
+        modalProductImage.src = product.image || 'images/product-placeholder.jpg';
+        modalProductImage.alt = product.name;
+
+        const detailOrder = [
+            { key: 'application', label: 'Application' }, { key: 'keyFeatures', label: 'Key Features' },
+            { key: 'keyFeaturesAndBenefits', label: 'Key Features & Benefits' }, { key: 'types', label: 'Types' },
+            { key: 'typeAndSizeRange', label: 'Type and Size Range' }, { key: 'typesAndSize', label: 'Types and Size' },
+            { key: 'sizeRange', label: 'Size Range' }, { key: 'sizeSpecifications', label: 'Size Specifications' },
+            { key: 'packaging', label: 'Packaging' }, { key: 'advantages', label: 'Advantages' }
+        ];
+        detailOrder.forEach(item => {
+            if (product.details[item.key]) {
+                const detailSection = document.createElement('div');
+                detailSection.classList.add('modal-detail-section');
+                const labelElement = document.createElement('h4');
+                labelElement.textContent = item.label + ':';
+                detailSection.appendChild(labelElement);
+                detailSection.innerHTML += formatDetailValue(product.details[item.key]);
+                detailsContainer.appendChild(detailSection);
+            }
+        });
+        
+        productModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() { if (!productModal) return; productModal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+    function formatDetailValue(value) { if (Array.isArray(value)) { if (value.length === 0) return '<p>N/A</p>'; return `<ul>${value.map(item => `<li>${item}</li>`).join('')}</ul>`; } return `<p>${value || 'N/A'}</p>`; }
+    function truncateText(text, maxLength) { if (!text) return ''; return text.length > maxLength ? text.substring(0, maxLength) + '...' : text; }
+    
+    if (closeModalButton) closeModalButton.addEventListener('click', closeProductModal);
+    if (productModal) window.addEventListener('click', (event) => { if (event.target === productModal) closeProductModal(); });
+    document.addEventListener('keydown', function(event) { if (event.key === "Escape" && productModal && productModal.style.display === 'block') closeProductModal(); });
+
+    // Populate quote dropdown if on a page that needs it
+    async function populateQuoteDropdownIfNeeded() {
+        if (!quoteProductSelection) return;
+        try {
+            const response = await fetch('/data/products.json');
+            if (!response.ok) return;
+            const categories = await response.json();
+            let allProducts = [];
+            categories.forEach(category => {
+                category.products.forEach(product => {
+                    allProducts.push({ ...product, categoryName: category.categoryName });
+                });
+            });
+            quoteProductSelection.innerHTML = '<option value="">-- Select a Product --</option>';
+            allProducts.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = `${product.name} (${product.categoryName})`;
+                quoteProductSelection.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Could not populate quote dropdown:", error);
+        }
+    }
+    
+    // Initial Calls
+    fetchAndDisplayProducts();
+    populateQuoteDropdownIfNeeded();
 });
