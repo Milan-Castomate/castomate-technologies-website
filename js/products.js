@@ -183,28 +183,16 @@ document.addEventListener('DOMContentLoaded', () => {
         thumbnailsContainer.innerHTML = '';
 
         
-        if (product.images && product.images.length > 0) {
-    mainImage.src = product.images[0];
+      if (product.image) {
+    // If a product image exists, use it.
+    mainImage.src = product.image;
     mainImage.alt = product.name;
-
-    // This part builds the small thumbnail images
-    product.images.forEach((imgSrc, index) => {
-        const thumb = document.createElement('img');
-        thumb.src = imgSrc;
-        thumb.alt = `${product.name} thumbnail ${index + 1}`;
-        thumb.classList.add('thumbnail-img');
-        if (index === 0) { thumb.classList.add('active'); }
-        thumb.addEventListener('click', () => { 
-            mainImage.src = imgSrc;
-            thumbnailsContainer.querySelectorAll('.thumbnail-img').forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-        });
-        thumbnailsContainer.appendChild(thumb);
-    });
-} else { 
-    // Fallback if no images are found
-    mainImage.src = 'images/product-placeholder.jpg'; 
-    mainImage.alt = 'No image available'; 
+    thumbnailsContainer.innerHTML = ''; // Clear thumbnails since we only have one image
+} else {
+    // Otherwise, use the placeholder.
+    mainImage.src = 'images/product-placeholder.jpg';
+    mainImage.alt = 'No image available';
+    thumbnailsContainer.innerHTML = ''; // Also clear thumbnails here
 }
 
         
