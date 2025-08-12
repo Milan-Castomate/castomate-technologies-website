@@ -198,11 +198,13 @@ header nav {
     color: var(--primary-color);
     font-size: 1.8em;
     cursor: pointer;
+	
 }
 
 /* Mega Menu (Products Dropdown) */
 .nav-item-dropdown {
     position: relative;
+	padding: 25px 30px;
 }
 .mega-menu {
     display: none;
@@ -216,10 +218,11 @@ header nav {
     border-top: 3px solid var(--accent-color);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     z-index: 999;
-    padding: 250px 30px;
+    padding: 25px 30px;
 }
 .nav-item-dropdown:hover .mega-menu {
     display: block;
+	padding: 25px 30px;
 }
 .mega-menu-inner {
     display: grid;
