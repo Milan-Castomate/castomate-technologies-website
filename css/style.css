@@ -221,6 +221,7 @@ header nav {
 }
 .nav-item-dropdown:hover .mega-menu {
     display: block;
+	padding: 25px 30px;
 }
 .mega-menu-inner {
     display: grid;
