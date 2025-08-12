@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const productCard = document.createElement('div');
                     productCard.classList.add('product-card');
                     productCard.setAttribute('id', product.id);
-                    const productImage = (product.images && product.images.length > 0) ? product.images[0] : 'images/product-placeholder.jpg';
+                    const productImage = product.image ? product.image : 'images/product-placeholder.jpg';
                     productCard.innerHTML = `
                         <img src="${productImage}" alt="${product.name}" loading="lazy">
                         <div class="product-card-content">
