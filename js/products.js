@@ -181,17 +181,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainImage = document.getElementById('modalMainImage');
         const thumbnailsContainer = document.getElementById('modalThumbnails');
         thumbnailsContainer.innerHTML = '';
-        if (product.image) {
-    // If a product image exists, use it.
-    mainImage.src = product.image;
+
+        
+        if (product.images && product.images.length > 0) {
+    mainImage.src = product.images[0];
     mainImage.alt = product.name;
-    thumbnailsContainer.innerHTML = ''; // Clear thumbnails since we only have one image
-} else {
-    // Otherwise, use the placeholder.
-    mainImage.src = 'images/product-placeholder.jpg';
-    mainImage.alt = 'No image available';
-    thumbnailsContainer.innerHTML = ''; // Also clear thumbnails here
+
+    // This part builds the small thumbnail images
+    product.images.forEach((imgSrc, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = imgSrc;
+        thumb.alt = `${product.name} thumbnail ${index + 1}`;
+        thumb.classList.add('thumbnail-img');
+        if (index === 0) { thumb.classList.add('active'); }
+        thumb.addEventListener('click', () => { 
+            mainImage.src = imgSrc;
+            thumbnailsContainer.querySelectorAll('.thumbnail-img').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        });
+        thumbnailsContainer.appendChild(thumb);
+    });
+} else { 
+    // Fallback if no images are found
+    mainImage.src = 'images/product-placeholder.jpg'; 
+    mainImage.alt = 'No image available'; 
 }
+
+        
         const detailOrder = [{ key: 'application', label: 'Application' }, { key: 'keyFeatures', label: 'Key Features' }, { key: 'keyFeaturesAndBenefits', label: 'Key Features & Benefits' }, { key: 'types', label: 'Types' }, { key: 'typeAndSizeRange', label: 'Type and Size Range' }, { key: 'typesAndSize', label: 'Types and Size' }, { key: 'sizeRange', label: 'Size Range' }, { key: 'sizeSpecifications', label: 'Size Specifications' }, { key: 'packaging', label: 'Packaging' }, { key: 'advantages', label: 'Advantages' }];
         detailOrder.forEach(item => { if (product.details[item.key]) { const detailSection = document.createElement('div'); detailSection.classList.add('modal-detail-section'); const labelElement = document.createElement('h4'); labelElement.textContent = item.label + ':'; detailSection.appendChild(labelElement); detailSection.innerHTML += formatDetailValue(product.details[item.key]); detailsContainer.appendChild(detailSection); } });
         for (const key in product.details) { if (!detailOrder.some(item => item.key === key)) { const detailSection = document.createElement('div'); detailSection.classList.add('modal-detail-section'); const labelElement = document.createElement('h4'); labelElement.textContent = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()) + ':'; detailSection.appendChild(labelElement); detailSection.innerHTML += formatDetailValue(product.details[key]); detailsContainer.appendChild(detailSection); } }
