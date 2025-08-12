@@ -216,7 +216,7 @@ header nav {
     border-top: 3px solid var(--accent-color);
     border-radius: 0 0 var(--border-radius) var(--border-radius);
     z-index: 999;
-    padding: 25px 30px;
+    padding: 250px 30px;
 }
 .nav-item-dropdown:hover .mega-menu {
     display: block;
