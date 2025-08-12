@@ -204,7 +204,6 @@ header nav {
 /* Mega Menu (Products Dropdown) */
 .nav-item-dropdown {
     position: relative;
-	padding: 25px 30px;
 }
 .mega-menu {
     display: none;
@@ -222,7 +221,6 @@ header nav {
 }
 .nav-item-dropdown:hover .mega-menu {
     display: block;
-	padding: 25px 30px;
 }
 .mega-menu-inner {
     display: grid;
