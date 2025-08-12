@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const productModal = document.getElementById('productModal');
     const closeModalButton = document.querySelector('.modal .close-button');
     const quoteProductSelection = document.getElementById('productSelection');
+    const response = await fetch('data/products.json');
 
     // Data Storage
     let allCategoriesData = [];
