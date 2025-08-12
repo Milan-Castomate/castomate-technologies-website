@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const productModal = document.getElementById('productModal');
     const closeModalButton = document.querySelector('.modal .close-button');
     const quoteProductSelection = document.getElementById('productSelection');
-    const response = await fetch('data/products.json');
 
     // Data Storage
     let allCategoriesData = [];
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function fetchProducts() {
         try {
-            const response = await fetch('/data/products.json');
+            const response = await fetch('data/products.json');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             allCategoriesData = await response.json();
             
